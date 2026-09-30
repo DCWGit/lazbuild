@@ -10,6 +10,10 @@ namespace PassthroughCameraSamples
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void AfterSceneLoad()
         {
+            var ptLayerGo = new GameObject(nameof(OVRPassthroughLayer));
+            Object.DontDestroyOnLoad(ptLayerGo);
+            ptLayerGo.AddComponent<OVRPassthroughLayer>();
+
             bool permissionsRequestedOnce = false;
             SceneManager.sceneLoaded += (scene, _) =>
             {
