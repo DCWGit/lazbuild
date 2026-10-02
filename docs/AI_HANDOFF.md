@@ -36,4 +36,4 @@ Open with Unity 6000.6.3f1 or run `SpatialBuild.QuestPrototypeSetup.Build` in ba
 
 ## Git
 
-User's destination: `https://github.com/DCWGit/lazbuild`, configured as remote `spatialbuild`; Meta sample remains `origin` and must not receive user work. Destination `main` initially contained only `# lazbuild`. Keep the implementation on its own branch without force pushing or replacing `main`. See `git log` for commits.
+User's destination: `https://github.com/DCWGit/lazbuild`, configured as remote `spatialbuild`; Meta sample remains `origin` and must not receive user work. The implementation has been pushed to `spatial-registration-foundation`. Destination `main` still contains its initial README; the two histories are connected by a normal merge commit, with no force push. See `git log` for the local milestone commits and the remote branch for review.
