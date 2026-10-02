@@ -1,0 +1,1 @@
+Vendored jp.keijiro.apriltag from https://github.com/keijiro/jp.keijiro.apriltag commit fd6dd4698c9c6d2dc4a5e676beeab7f620006c78. BSD license retained. Embedded package includes Android arm64 and desktop native libraries. Local change: measured fx/fy/cx/cy overload replaces centered-FOV assumption for SpatialBuild. Native detector uses tagStandard41h12.

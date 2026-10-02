@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><Nullable>disable</Nullable><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="../../Assets/SpatialBuild/Coordinates/RigidD.cs" Link="RigidD.cs" />
+    <Compile Include="../../Assets/SpatialBuild/Coordinates/MatrixFrames.cs" Link="MatrixFrames.cs" />
+    <Compile Include="../../Assets/SpatialBuild/Localization/LocalizationManager.cs" Link="LocalizationManager.cs" />
+    <Compile Include="../../Assets/SpatialBuild/Localization/RigidFit.cs" Link="RigidFit.cs" />
+    <Compile Include="../../Assets/SpatialBuild/Localization/CameraIntrinsicsMath.cs" Link="CameraIntrinsicsMath.cs" />
+  </ItemGroup>
+</Project>
