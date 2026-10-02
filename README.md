@@ -1,4 +1,4 @@
-# SpatialBuild — precision construction AR prototype
+# SpatialBuild (lazbuild) — precision construction AR prototype
 
 SpatialBuild is a Unity / Quest 3 prototype for placing construction IFC geometry in a physical reference frame and withholding layout guidance when registration is uncertain. The headset opens in **field mode** with no building placed. `PROJECT` loads the Dental Clinic IFC package; `CONTROL` requires a measured control profile and AprilTags. `DEV` opens the earlier miniature/manual demonstration. The measured registration workflow has not yet been validated physically.
 
