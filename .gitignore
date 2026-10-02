@@ -19,3 +19,18 @@ PerformanceTestRun*.*
 StreamingAssets*
 buildInfo.txt
 Packages/packages-lock.json
+
+# Local build output and generated developer credentials
+/spatialbuild-*.log
+/spatialbuild-*-ready.txt
+/spatialbuild-android-build.txt
+*.slnx
+Assets/Resources/DevAgentSettings.asset
+Assets/Resources/DevAgentSettings.asset.meta
+Assets/ValidationEmpty.unity
+Assets/ValidationEmpty.unity.meta
+MemoryCaptures/
+__pycache__/
+.pytest_cache/
+# Downloaded IFC sources are reproducible from Tools/bim/sources.json
+SourceData/
