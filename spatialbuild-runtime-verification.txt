@@ -1,0 +1,1 @@
+PASS: scene components, 13 elements, valid solve, movement latch, explicit reset, occlusion UNKNOWN, staleness UNKNOWN, discipline/task/elevation filters, ray selection metadata, offscreen camera render. Synthetic only.

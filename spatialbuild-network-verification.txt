@@ -1,0 +1,12 @@
+PASS Noiseless 3D triangle and four-node network
+PASS Nonzero station heights and azimuth wrap
+PASS Deterministic noise and sample variation
+PASS Disconnected graph rejected
+PASS Nonfinite observations rejected
+PASS Negative noise rejected
+PASS Movement alarm latches after C restored
+PASS Inconsistent range produces large residual
+PASS Shared orientation bias can hide behind small residuals
+  200 synthetic networks; empirical RMS 0.856 mm; formal RMS 0.817 mm; ratio 1.048
+PASS Monte Carlo independent-noise conditional RMS
+10 verification groups passed. Synthetic data only.

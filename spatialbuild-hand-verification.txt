@@ -1,0 +1,1 @@
+PASS: miniature/full-scale placement, rotation centre invariance, reset hides geometry and restores scale, pinch release-to-arm, held-pinch suppression and tracking-recovery suppression. Physical hand interaction still requires headset validation.

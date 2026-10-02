@@ -1,0 +1,1 @@
+PASS: six-step job loading, material quantities, skip does not complete, completion advances, undo restores target/materials, completion bounds. Completion is user-reported; no construction validation.

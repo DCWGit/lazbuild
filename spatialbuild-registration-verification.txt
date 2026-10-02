@@ -1,0 +1,1 @@
+PASS: rigid pose recovery, held-out fourth point, collinearity rejection, inconsistent-control rejection, nonfinite rejection, capture sequence, independent-check pass/fail, invalidation hides geometry, nonfinite probe rejected immediately. Synthetic controls only; no headset events exercised.

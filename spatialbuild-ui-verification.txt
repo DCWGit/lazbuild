@@ -1,0 +1,1 @@
+PASS: collapsed wheel, eleven button hit targets within central/lower view, reject hidden-reference/miniature/unentered check records, independent checkpoint geometry. Rendered Builds/ui-preview.png; headset comfort still needs user validation.

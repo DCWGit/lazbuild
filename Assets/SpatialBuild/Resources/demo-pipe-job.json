@@ -1,0 +1,12 @@
+{
+ "id":"demo-pipe-v1",
+ "title":"Demo: five supports and a pipe",
+ "steps":[
+  {"targetId":"H184","title":"HANGER ANCHOR HERE","material":"Demo hanger anchor","quantity":1,"unit":"each"},
+  {"targetId":"H185","title":"HANGER ANCHOR HERE","material":"Demo hanger anchor","quantity":1,"unit":"each"},
+  {"targetId":"H186","title":"HANGER ANCHOR HERE","material":"Demo hanger anchor","quantity":1,"unit":"each"},
+  {"targetId":"H187","title":"HANGER ANCHOR HERE","material":"Demo hanger anchor","quantity":1,"unit":"each"},
+  {"targetId":"H188","title":"HANGER ANCHOR HERE","material":"Demo hanger anchor","quantity":1,"unit":"each"},
+  {"targetId":"P-284","title":"PIPE CENTERLINE HERE","material":"2 inch copper pipe","quantity":6,"unit":"m"}
+ ]
+}
