@@ -10,6 +10,9 @@ using UnityEngine.SceneManagement;
 using SpatialBuild.Positioning;
 using SpatialBuild.Construction;
 using SpatialBuild.Quest;
+using SpatialBuild.Bim;
+using SpatialBuild.Coordinates;
+using SpatialBuild.Localization;
 
 namespace SpatialBuild {
     public static class QuestPrototypeSetup {
@@ -20,6 +23,7 @@ namespace SpatialBuild {
             Verify();
             VerifyInterface();
             VerifyJob();
+            VerifyImportedProject();
             if(!File.Exists(ScenePath)){
                 var previous=SceneManager.GetActiveScene();
                 if(string.IsNullOrEmpty(previous.path)&&Application.isBatchMode)EditorSceneManager.SaveScene(previous,"Assets/ValidationEmpty.unity");
@@ -63,6 +67,9 @@ namespace SpatialBuild {
                 var controls=registration.GetComponent<HandPreviewControls>();if(!controls)controls=registration.gameObject.AddComponent<HandPreviewControls>();
                 controls.world=registration.world;controls.eye=rig.centerEyeAnchor;controls.trackingSpace=rig.trackingSpace;controls.rightHand=right;
                 registration.handControls=controls;
+                var field=registration.GetComponent<FieldProjectController>();if(!field)field=registration.gameObject.AddComponent<FieldProjectController>();
+                field.developerDemo=registration;field.eye=rig.centerEyeAnchor;field.trackingSpace=rig.trackingSpace;field.rightHand=right;
+                controls.field=field;
                 if(!EditorSceneManager.SaveScene(scene,ScenePath))throw new Exception("Hand scene save failed");
             }finally {if(opened)EditorSceneManager.CloseScene(scene,true);if(previous.IsValid())SceneManager.SetActiveScene(previous);}
         }
@@ -113,6 +120,19 @@ namespace SpatialBuild {
             File.WriteAllText("spatialbuild-hand-verification.txt","PASS: miniature/full-scale placement, rotation centre invariance, reset hides geometry and restores scale, pinch release-to-arm, held-pinch suppression and tracking-recovery suppression. Physical hand interaction still requires headset validation.");
         }
         static void Require(bool condition,string reason){if(!condition)throw new Exception("Registration verification failed: "+reason);}
+        public static void VerifyImportedProject(){
+            var asset=Resources.Load<TextAsset>("DentalClinic/project");Require(asset!=null,"Imported IFC manifest available");
+            var project=JsonUtility.FromJson<ProjectManifest>(asset.text);
+            Require(project!=null&&project.schemaVersion=="spatialbuild.project.v2"&&project.units=="metres","Normalized IFC manifest schema");
+            Require(project.elements!=null&&project.elements.Length==19988,"Full GUID-linked IFC catalog");
+            int renderable=0,mep=0;foreach(var element in project.elements){if(element.geometryAvailable)renderable++;if(element.id.StartsWith("mep:")){mep++;Require(!element.geometryAvailable,"MEP geometry must not be fabricated");}}
+            Require(renderable==3933&&mep==16012,"IFC geometry counts");
+            var matrix=MatrixFrames.FromRowMajor(project.bimToProject);Require((matrix.Apply(new DVec(1,2,3))-new DVec(1,2,3)).Norm<1e-12,"BIM/project transform");
+            var profileAsset=Resources.Load<TextAsset>("DentalClinic/control-profile");Require(profileAsset!=null,"Control profile available");
+            var profile=JsonUtility.FromJson<ControlProfile>(profileAsset.text);
+            Require(profile.projectRevision==project.revision&&profile.controls!=null&&profile.controls.Length==0,"Field starts without fabricated survey controls");
+            File.WriteAllText("spatialbuild-ifc-verification.txt","PASS: 19988 IFC elements, 3933 arc/str meshes, 16012 MEP metadata-only entries, profile revision match, no configured physical control. No physical accuracy evidence.");
+        }
         public static void VerifyJob(){
             var asset=Resources.Load<TextAsset>("demo-pipe-job");Require(asset!=null,"Demo job asset exists");
             var job=new ConstructionJob(JsonUtility.FromJson<JobDefinition>(asset.text));

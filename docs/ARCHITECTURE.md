@@ -1,21 +1,21 @@
-# Actual architecture (audit baseline)
+# SpatialBuild architecture — 2026-10-02
 
-Unity 6000.6.3f1; Meta MRUK/Core 207.0.0; OpenXR 1.18.0; XR Management 4.7.0; Android ARM64 IL2CPP, min SDK 32, target 34.
+Unity 6000.6.3f1, Meta MRUK/Core 207.0.0, OpenXR 1.18.0, XR Management 4.7.0, Android ARM64 IL2CPP. Primary scene: `Assets/SpatialBuild/Scenes/SpatialBuildQuest.unity`. The scene retains the official `OVRCameraRig` and passthrough layer. `QuestPrototypeSetup.PrepareHands` attaches `FieldProjectController` and the previously working hand input. The field controller disables the manual demo on startup; the `DEV` menu explicitly re-enables it. Other sample and positioning lab scenes remain.
 
-Primary/startup scene: Assets/SpatialBuild/Scenes/SpatialBuildQuest.unity.
-XR rig: official Packages/com.meta.xr.sdk.core/Prefabs/OVRCameraRig.prefab, Stage tracking origin.
-Passthrough: scene object Passthrough with OVRPassthroughLayer, transparent camera clear.
-BIM/debug root: ConstructionWorld, currently generated example geometry.
-Localization root: Manual project registration with QuestRegistrationController.
-UI: HandPreviewControls creates the head-relative CurvedPreviewPanel bottom wheel; OVRHand components under rig hand anchors provide pointer/pinch.
-Control objects: simulated nodes are generated in SpatialBuildPositioningLab, not real Quest control references.
-Persistent managers: none across scenes. Job progress and logs persist in Application.persistentDataPath, not spatial registration.
-Other scenes: SpatialBuildInspection and SpatialBuildPositioningLab. Original upstream sample scenes retained.
+## Coordinate frames
 
-Construction/: fixture elements, job definition and progress. Quest/: input, UI, preview and manual calibration. Positioning/: double-valued node math, simulation, float Unity manual registration. Diagnostics/: desktop network reports. Runtime/: earlier exported-model viewer and an unimplemented fiducial-source interface.
+Canonical math is double precision, right-handed XYZ with Z up. `AFromB` maps a point in frame B to frame A. `projectFromBim` is the rigid `bimToProject` matrix in the normalized project manifest; `questFromProject` comes from physical control registration; `questFromHead` is the headset tracking pose. Composition applies the right operand first. Unity receives only rebased metre values via `UnityFrames`: canonical `(x,y,z)` becomes Unity `(x,z,y)`. Mesh vertices are local to each IFC element's double anchor; anchors are translated by `projectOrigin` before Unity floats. Scale, shear, reflection and nonfinite transforms are rejected.
 
-Existing Python IFC importer lives outside this Git root at ../outputs/precision-bim. It uses IfcOpenShell, NumPy and a normalized export. It must be brought into a reproducible in-repository pipeline; don't depend on the sibling directory in production. IFC map conversion is currently not applied; the exporter rejects large coordinates.
+`RigidFit` estimates the six-degree-of-freedom Quest/project transform from at least three noncollinear known marker centers. It does not require separately surveyed marker orientation. `LocalizationManager` accepts real `FIDUCIAL_CAMERA` observations, rejects simulated/stale/wrong-revision input, checks every configured reference residual, smooths accepted corrections, and latches `INVALID` on disagreement. Calibration can collect sequential tag views within 20 seconds as Quest local tracking relates their capture poses. Validity expires when absolute observations stop. This timing window is an engineering parameter, not measured drift performance.
 
-Camera acquisition is available in the installed MRUK PassthroughCameraAccess API but not connected to localization. No CV library integrated at audit time.
+`FiducialCameraSource` uses MRUK `PassthroughCameraAccess` left-camera pixels, timestamp-specific camera pose, reported intrinsics and crop, and the embedded `jp.keijiro.apriltag` detector (`tagStandard41h12`). Camera pixels are flipped to the detector's top-down convention. Native image acquisition currently waits for a GPU readback; latency/performance need headset measurement. The camera source carries no survey authority on its own. `ControlProfile` defines marker ID, measured size, datum description, version, `projectFromDatum` and `datumFromMarker`. The committed profile has zero controls.
 
-Build: Unity -batchmode -quit -projectPath <root> -buildTarget Android -executeMethod SpatialBuild.QuestPrototypeSetup.Build -logFile <path>. That method runs registration, hand, UI and job checks. NetworkVerification covers the simulator. Device operations use hzdb with Unity SDK adb path when needed. Generated logs, APKs and Library are not source control.
+States are `UNINITIALIZED`, `CALIBRATING`, `VALID`, `DEGRADED`, `INVALID`, `LOST`. `VALID` also requires the profile's physical-validation flags; solver residual alone is insufficient. On `INVALID`, the last known model pose is shown in red. On `LOST`, it is hidden. Explicit blue 1:50 inspection is labelled unregistered. `DEGRADED` is red. This color policy applies to every IFC mesh through `BimModelView`; no failed control is silently discarded. The former `RealPositioningProvider` is still a fail-closed stub and is not used as a fake optical source.
+
+## IFC path
+
+`Tools/bim/fetch_sources.py` pins and hashes IFC-Bench Dental Clinic architectural, structural and MEP sources. `Tools/bim/import_ifc.py` uses IfcOpenShell to produce the normalized `Resources/DentalClinic/project.json` plus local float mesh chunks. Serial geometry iteration and GUID sorting make the output repeat byte-for-byte; one element skipped by the bulk iterator is recovered through direct shape conversion. The manifest holds project/source revisions, metre units, original IFC GUIDs, original placements, type/property metadata, classification evidence, geometry references, and a declared origin. `BimModelView` creates meshes gradually, keeps the whole model under one registration root, filters discipline and elevation, and allows simple ray/bounds selection. The architectural and structural sources are renderable; the supplied MEP source has 16,012 elements with **no IFC shape representations**. Their metadata is retained with `geometryAvailable=false`; no MEP geometry is fabricated. The clinic files supply an engineering coordinate frame, not surveyed physical control.
+
+## Verification and logging
+
+`Tests/CoordinateChecks` runs coordinate, origin, fit, trust, degeneracy and camera-crop checks with `dotnet run`. `Tools/bim/validate_import.py` verifies GUID uniqueness, source hashes, mesh byte ranges and triangle indices. The Quest build calls the existing manual registration, input, UI, job and simulation checks. `FieldProjectController` writes event JSONL files in `Application.persistentDataPath`; events include project and calibration revision, state, source, capture time, observed pose, fit residuals and root pose. `Tools/measurements/analyze.py` reads **independently measured** checkpoints and computes mean, median, RMSE, P95, maximum and standard deviation. No physical accuracy result exists yet.

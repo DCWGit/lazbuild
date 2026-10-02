@@ -6,6 +6,7 @@ namespace SpatialBuild.Quest {
   readonly TextMesh[] labels=new TextMesh[10];
   readonly Renderer[] backgrounds=new Renderer[10];
   readonly Transform[] roots=new Transform[10];
+  readonly bool[] available=new bool[10];
   Material normal,hover,pressed,selected;
   GameObject information;
   TextMesh details;
@@ -16,7 +17,7 @@ namespace SpatialBuild.Quest {
   public static Vector3 Arc(float degrees,float y){float a=degrees*Mathf.Deg2Rad;return new Vector3(Mathf.Sin(a)*Radius,y,Mathf.Cos(a)*Radius);}
   public void Build(){
    normal=Mat(new Color(.025f,.055f,.09f,.97f));hover=Mat(new Color(.02f,.28f,.36f,1));pressed=Mat(new Color(.40f,.08f,.65f,1));selected=Mat(new Color(.10f,.20f,.30f,1));
-   for(int i=0;i<10;i++){
+   for(int i=0;i<10;i++){available[i]=true;
     var root=new GameObject("Menu card "+i);root.transform.SetParent(transform,false);roots[i]=root.transform;
     var box=GameObject.CreatePrimitive(PrimitiveType.Cube);box.transform.SetParent(root.transform,false);
     box.transform.localScale=new Vector3(i<4?.17f:.235f,i<4?.085f:.105f,.012f);
@@ -44,7 +45,7 @@ namespace SpatialBuild.Quest {
   void Layout(){
    float t=animation*animation*(3-2*animation);
    for(int i=0;i<10;i++){
-    bool show=i<4?animation>.01f:actions&&animation>.95f;
+    bool show=available[i]&&(i<4?animation>.01f:actions&&animation>.95f);
     roots[i].gameObject.SetActive(show);
     if(i<4){float x=(i-1.5f)*.19f;Vector3 destination=new Vector3(x,-.29f-Mathf.Abs(x)*.08f,Radius);
      roots[i].localPosition=Vector3.Lerp(Hub,destination,t);roots[i].localRotation=Quaternion.Euler(0,0,Mathf.Lerp(0,-(i-1.5f)*7,t));
@@ -70,7 +71,8 @@ namespace SpatialBuild.Quest {
   public void Collapse(){expanded=false;actions=false;animation=0;Layout();}
   public void ShowForVerification(){expanded=true;actions=true;animation=1;Layout();}
   public void Present(string[] text,int tab,int hovered,bool pinching,string description){
-   for(int i=0;i<10;i++){labels[i].text=text[i];backgrounds[i].sharedMaterial=i==hovered?(pinching?pressed:hover):(i==tab?selected:normal);}
+   for(int i=0;i<10;i++){available[i]=!string.IsNullOrEmpty(text[i]);labels[i].text=text[i];backgrounds[i].sharedMaterial=i==hovered?(pinching?pressed:hover):(i==tab?selected:normal);}
+   Layout();
    hubRenderer.sharedMaterial=hovered==10?(pinching?pressed:hover):selected;details.text=description;
   }
   void OnDestroy(){foreach(var m in new[]{normal,hover,pressed,selected})if(m)Remove(m);}

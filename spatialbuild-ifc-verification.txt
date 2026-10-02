@@ -1,0 +1,1 @@
+PASS: 19988 IFC elements, 3933 arc/str meshes, 16012 MEP metadata-only entries, profile revision match, no configured physical control. No physical accuracy evidence.

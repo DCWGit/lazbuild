@@ -1,3 +1,11 @@
+# SpatialBuild — precision construction AR prototype
+
+SpatialBuild is a Unity / Quest 3 prototype for placing construction IFC geometry in a physical reference frame and withholding layout guidance when registration is uncertain. The headset opens in **field mode** with no building placed. `PROJECT` loads the Dental Clinic IFC package; `CONTROL` requires a measured control profile and AprilTags. `DEV` opens the earlier miniature/manual demonstration. The measured registration workflow has not yet been validated physically.
+
+Start with [the current handoff](docs/AI_HANDOFF.md), [architecture](docs/ARCHITECTURE.md), [physical setup](docs/PHYSICAL_SETUP.md), and [source attribution](docs/SOURCE_ATTRIBUTION.md). The full product specification is in [PRODUCT_SPEC.md](docs/PRODUCT_SPEC.md).
+
+The project derives from the following Meta passthrough camera sample; its original instructions remain below.
+
 # Unity-PassthroughCameraAPISamples
 
 ## Project Overview

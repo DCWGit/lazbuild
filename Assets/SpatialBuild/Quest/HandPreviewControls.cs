@@ -3,6 +3,7 @@ using SpatialBuild.Construction;
 namespace SpatialBuild.Quest {
  public sealed class HandPreviewControls : MonoBehaviour {
   public OVRHand rightHand;
+  public FieldProjectController field;
   public ConstructionWorld world;
   public Transform eye,trackingSpace;
   readonly PinchGate pinch=new PinchGate();
@@ -79,7 +80,7 @@ namespace SpatialBuild.Quest {
      if(a==1)moveMode=!moveMode;
      if(a==2)preview.Rotate(world,-15);if(a==3)preview.Rotate(world,15);
      if(a==4){preview.Place(world,eye,trackingSpace,preview.fullScale);PlacePanel();}
-     if(a==5){preview.Place(world,eye,trackingSpace,false);ShowAll();moveMode=false;trial.checkMode=false;PlacePanel();}break;
+     if(a==5){if(field){field.ReturnFromDeveloper();return;}preview.Place(world,eye,trackingSpace,false);ShowAll();moveMode=false;trial.checkMode=false;PlacePanel();}break;
     case 1:
      world.elevationFilter=false;
      if(a==0)world.layerMode=(world.layerMode+1)%3;
@@ -106,7 +107,7 @@ namespace SpatialBuild.Quest {
   void Present(HeadsetPreview preview,int hovered,bool purple){
    string[] actions;string description;
    switch(tab){
-    case 2:actions=new[]{preview.fullScale?"MINIATURE\n1:10":"FULL SIZE\n1:1",moveMode?"LOCK\nplacement":"MOVE\npinch + drag","ROTATE\n15 degrees left","ROTATE\n15 degrees right","PLACE\nin front","RESET\nminiature"};
+    case 2:actions=new[]{preview.fullScale?"MINIATURE\n1:10":"FULL SIZE\n1:1",moveMode?"LOCK\nplacement":"MOVE\npinch + drag","ROTATE\n15 degrees left","ROTATE\n15 degrees right","PLACE\nin front",field?"FIELD MODE\nexit demo":"RESET\nminiature"};
      description="1  Choose size    2  Move    3  Lock\n"+(preview.fullScale?"Floor is approximate. Not survey aligned.":"Miniature preview. Not survey aligned.")+"\n"+Hint;break;
     case 1:actions=new[]{"LAYERS\n"+(world.layerMode==0?"all":world.layerMode==1?"one band":"all below"),"LOWER\n0.25 m","HIGHER\n0.25 m",world.onlyNext?"SHOW\nremaining":"ONLY\nnext piece",world.hideDone?"SHOW\ndone items":"HIDE\ndone items","RESET\nlayer view"};
      description="Height: "+world.elevationM.ToString("F2")+" m | band +/- "+world.halfRangeM.ToString("F2")+" m\nGold = next piece | blue = remaining\nDone items are your report, not a scan.";break;

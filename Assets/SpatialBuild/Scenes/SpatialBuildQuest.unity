@@ -486,6 +486,7 @@ GameObject:
   - component: {fileID: 1849115398}
   - component: {fileID: 1849115397}
   - component: {fileID: 1849115399}
+  - component: {fileID: 1849115400}
   m_Layer: 0
   m_Name: Manual project registration
   m_TagString: Untagged
@@ -546,9 +547,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpatialBuild.Quest.HandPreviewControls
   rightHand: {fileID: 1851962465}
+  field: {fileID: 1849115400}
   world: {fileID: 447238871}
   eye: {fileID: 1933765849}
   trackingSpace: {fileID: 1933765852}
+--- !u!114 &1849115400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849115396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2accf783caa5ca448f75512bc4847e4, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::SpatialBuild.Quest.FieldProjectController
+  developerDemo: {fileID: 1849115397}
+  eye: {fileID: 1933765849}
+  trackingSpace: {fileID: 1933765852}
+  rightHand: {fileID: 1851962465}
 --- !u!1 &1851962463
 GameObject:
   m_ObjectHideFlags: 0
