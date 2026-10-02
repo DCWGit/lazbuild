@@ -37,3 +37,5 @@ Open with Unity 6000.6.3f1 or run `SpatialBuild.QuestPrototypeSetup.Build` in ba
 ## Git
 
 User's destination: `https://github.com/DCWGit/lazbuild`, configured as remote `spatialbuild`; Meta sample remains `origin` and must not receive user work. The implementation has been pushed to `spatial-registration-foundation`. Destination `main` still contains its initial README; the two histories are connected by a normal merge commit, with no force push. See `git log` for the local milestone commits and the remote branch for review.
+
+Implementation commits: localization `14001ac3eb940932066da12c06e7009f71a56ce5`, IFC/control assets `49ef7cec23886a83e0792f774b837d685ec6e424`, field Quest flow `9da9cc001f82b86912588ee35684420c3ad81a8c`. The repository-history merge is `5bfaf2c2f0f3c4a540f82cf7ed0cc4da70091606`. The branch tip also includes documentation-only handoff commits; use `git rev-parse HEAD` or the GitHub branch page for its current hash.
