@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "spatialbuild.control.v1",
+  "projectId": "dental-clinic",
+  "projectRevision": "79aa5e7cfbb89b7d7e9a15a3c9d6405b8c986c244f9789a9faa72b608acab43a",
+  "calibrationVersion": "UNCONFIGURED",
+  "surveyBasis": "UNMEASURED: no project control has been supplied",
+  "notes": "Populate from measured, stable controls before field registration. Do not set surveyed or physicalValidationPassed without supporting observations.",
+  "controls": []
+}

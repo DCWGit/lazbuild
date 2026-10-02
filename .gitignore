@@ -3,6 +3,7 @@ UserSettings/
 Library/
 Logs/
 obj/
+bin/
 Build/
 Builds/
 .vs/
@@ -34,3 +35,6 @@ __pycache__/
 .pytest_cache/
 # Downloaded IFC sources are reproducible from Tools/bim/sources.json
 SourceData/
+!/Tests/CoordinateChecks/CoordinateChecks.csproj
+/Reports/ifc-import-run.log
+/Reports/*-local.png

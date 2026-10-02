@@ -1,0 +1,35 @@
+{
+  "datasetRevision": "7c102ef652a0820f673b52cb56188efd9da7ddba",
+  "sources": [
+    {
+      "file": "arc.ifc",
+      "url": "https://huggingface.co/datasets/sylvainHellin/ifc-bench/resolve/7c102ef652a0820f673b52cb56188efd9da7ddba/projects/dental_clinic/arc.ifc",
+      "bytes": 13208096,
+      "sha256": "b90fe57b8aa9329d762a564770e697d4f7357677484e3a78ede4ab6d2163c0c0"
+    },
+    {
+      "file": "str.ifc",
+      "url": "https://huggingface.co/datasets/sylvainHellin/ifc-bench/resolve/7c102ef652a0820f673b52cb56188efd9da7ddba/projects/dental_clinic/str.ifc",
+      "bytes": 19375987,
+      "sha256": "3351ee3bd19aea39167ba466237fe06de64ea391b0a31b0aacc017c84311e14d"
+    },
+    {
+      "file": "mep.ifc",
+      "url": "https://huggingface.co/datasets/sylvainHellin/ifc-bench/resolve/7c102ef652a0820f673b52cb56188efd9da7ddba/projects/dental_clinic/mep.ifc",
+      "bytes": 125780663,
+      "sha256": "72bdbfeb104d044bcd1ae644f9a5c6e72fd7750c2fd15fe98de2c53a04850e8d"
+    },
+    {
+      "file": "license.txt",
+      "url": "https://huggingface.co/datasets/sylvainHellin/ifc-bench/resolve/7c102ef652a0820f673b52cb56188efd9da7ddba/projects/dental_clinic/license.txt",
+      "bytes": 404,
+      "sha256": "9e3e0deafee61941c22d85bd744e9ab0e870691017600a97f24e5fa2a9b62298"
+    },
+    {
+      "file": "model_card.md",
+      "url": "https://huggingface.co/datasets/sylvainHellin/ifc-bench/resolve/7c102ef652a0820f673b52cb56188efd9da7ddba/projects/dental_clinic/model_card.md",
+      "bytes": 931,
+      "sha256": "ed324f3c923673e16b5c96de6ef5f5dc30ad0490fdaa4af1e331000cbcd299ae"
+    }
+  ]
+}
